@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions in Python for AI - Course Module</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, #4158D0, #C850C0);
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .concept-map {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-editor {
+            height: 200px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #eee;
+        }
+
+        .function-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+        }
+
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .practice-section {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .output-area {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            min-height: 100px;
+        }
+
+        .run-btn {
+            background: #4158D0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .run-btn:hover {
+            background: #3648b8;
+        }
+
+        .topic-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .topic-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #4158D0;
+            border-radius: 20px;
+            color: #4158D0;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .topic-btn.active {
+            background: #4158D0;
+            color: white;
+        }
+
+        .ai-application {
+            background: #f1f8e9;
+            border-left: 4px solid #689f38;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .challenge-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #ff5722;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-header">
+        <div class="container">
+            <h1>Functions in Python for AI Development</h1>
+            <p>Master function creation and usage for efficient AI programming</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="topic-nav">
+            <button class="topic-btn active">Basic Functions</button>
+            <button class="topic-btn">Parameters & Returns</button>
+            <button class="topic-btn">Lambda Functions</button>
+            <button class="topic-btn">AI Applications</button>
+            <button class="topic-btn">Practice</button>
+        </div>
+
+        <div class="concept-map">
+            <h2>Function Concepts in AI Development</h2>
+            <svg viewBox="0 0 800 200" width="100%">
+                <g fill="#4158D0" font-size="14">
+                    <circle cx="400" cy="100" r="60" fill-opacity="0.2"/>
+                    <text x="400" y="100" text-anchor="middle">Python Functions</text>
+                    
+                    <circle cx="200" cy="100" r="50" fill-opacity="0.2"/>
+                    <text x="200" y="100" text-anchor="middle">Data Processing</text>
+                    
+                    <circle cx="600" cy="100" r="50" fill-opacity="0.2"/>
+                    <text x="600" y="100" text-anchor="middle">Model Building</text>
+                    
+                    <path d="M260,100 L340,100" stroke="#4158D0" stroke-width="2"/>
+                    <path d="M460,100 L540,100" stroke="#4158D0" stroke-width="2"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="content-section">
+            <h2>1. Basic Function Structure</h2>
+            <div class="highlight-box">
+                <h3>Key Concept</h3>
+                <p>Functions are reusable blocks of code that perform specific tasks. In AI, they're used to organize data processing, model training, and prediction logic.</p>
+            </div>
+
+            <div class="code-editor" id="editor1">
+# Basic function structure
+def preprocess_data(data, normalize=True):
+    """
+    Preprocess input data for machine learning model
+    
+    Parameters:
+    data: Input features
+    normalize: Whether to normalize the data
+    
+    Returns:
+    Processed data ready for model
+    """
+    if normalize:
+        # Simulate normalization
+        processed_data = data / 100
+    else:
+        processed_data = data
+    
+    return processed_data
+
+# Example usage
+sample_data = [150, 200, 300]
+processed = preprocess_data(sample_data)
+print(f"Original data: {sample_data}")
+print(f"Processed data: {processed}")
+            </div>
+            <button class="run-btn">Run Code</button>
+            <div class="output-area" id="output1">Output will appear here...</div>
+        </div>
+
+        <div class="content-section">
+            <h2>2. AI-Specific Function Examples</h2>
+            <div class="ai-application">
+                <h3>Real-world Application</h3>
+                <p>Let's create a simple feature scaling function commonly used in machine learning:</p>
+            </div>
+
+            <div class="code-editor" id="editor2">
+def min_max_scale(features):
+    """
+    Scale features to range [0,1] using min-max scaling
+    
+    Parameters:
+    features: List of numerical values
+    
+    Returns:
+    Scaled features
+    """
+    min_val = min(features)
+    max_val = max(features)
+    
+    scaled = [(x - min_val) / (max_val - min_val) for x in features]
+    return scaled
+
+# Test the function
+raw_features = [10, 20, 30, 40, 50]
+scaled_features = min_max_scale(raw_features)
+print(f"Original features: {raw_features}")
+print(f"Scaled features: {scaled_features}")
+            </div>
+            <button class="run-btn">Run Code</button>
+            <div class="output-area" id="output2">Output will appear here...</div>
+        </div>
+
+        <div class="practice-section">
+            <h2>Practice Exercise <span class="challenge-badge">Challenge</span></h2>
+            <p>Create a function that calculates accuracy for a binary classification problem:</p>
+
+            <div class="code-editor" id="editor3">
+# Create a function calculate_accuracy that:
+# 1. Takes two lists: predictions and actual_values
+# 2. Calculates the accuracy (correct predictions / total predictions)
+# 3. Returns the accuracy as a percentage
+
+def calculate_accuracy(predictions, actual_values):
+    # Your code here
+    pass
+
+# Test your function
+test_predictions = [1, 0, 1, 1, 0]
+test_actual = [1, 0, 1, 0, 0]
+            </div>
+            <button class="run-btn">Test Solution</button>
+            <div class="output-area" id="output3">Your solution output will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Ace editors
+        const editors = ['editor1', 'editor2', 'editor3'].map(id => {
+            const editor = ace.edit(id);
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/python");
+            editor.setFontSize(14);
+            return editor;
+        });
+
+        // Topic navigation
+        document.querySelectorAll('.topic-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Simulate code execution
+        document.querySelectorAll('.run-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const outputArea = document.getElementById(`output${index + 1}`);
+                outputArea.textContent = 'Running code...';
+                
+                setTimeout(() => {
+                    switch(index) {
+                        case 0:
+                            outputArea.textContent = 'Original data: [150, 200, 300]\nProcessed data: [1.5, 2.0, 3.0]';
+                            break;
+                        case 1:
+                            outputArea.textContent = 'Original features: [10, 20, 30, 40, 50]\nScaled features: [0.0, 0.25, 0.5, 0.75, 1.0]';
+                            break;
+                        case 2:
+                            outputArea.textContent = 'Test your accuracy calculation here!';
+                            break;
+                    }
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

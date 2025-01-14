@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python for AI - Course</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #4158D0, #C850C0);
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            padding-top: 64px;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: white;
+            height: calc(100vh - 64px);
+            position: fixed;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            margin-left: 300px;
+            flex: 1;
+            padding: 2rem;
+            min-height: calc(100vh - 64px);
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            background: #f8f9fa;
+        }
+
+        .module {
+            border-bottom: 1px solid #eee;
+        }
+
+        .module-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .module-content {
+            display: none;
+        }
+
+        .module.active .module-content {
+            display: block;
+        }
+
+        .lesson-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem 0.75rem 3rem;
+            color: #666;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .lesson-link:hover {
+            background: #f8f9fa;
+            color: #4158D0;
+        }
+
+        .lesson-link.active {
+            background: #4158D0;
+            color: white;
+        }
+
+        .lesson-content {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .lesson-content.active {
+            display: block;
+        }
+
+        .code-editor {
+            height: 200px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #eee;
+        }
+
+        .run-btn {
+            background: #4158D0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .output-area {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            min-height: 100px;
+        }
+
+        .concept-card {
+            background: #f8f9fa;
+            border-left: 4px solid #4158D0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 999;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .toggle-sidebar {
+                display: block !important;
+            }
+        }
+
+        .toggle-sidebar {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="toggle-sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h1>Python for AI</h1>
+        <div></div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Course Content</h2>
+            </div>
+
+            <div class="module active">
+                <div class="module-header">
+                    <span>1. Python Basics</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="module-content">
+                    <div class="lesson-link" data-lesson="intro">Introduction to Python</div>
+                    <div class="lesson-link" data-lesson="variables">Variables & Data Types</div>
+                    <div class="lesson-link" data-lesson="control">Control Structures</div>
+                </div>
+            </div>
+
+            <div class="module">
+                <div class="module-header">
+                    <span>2. Data Structures</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="module-content">
+                    <div class="lesson-link" data-lesson="lists">Lists & Tuples</div>
+                    <div class="lesson-link" data-lesson="dict">Dictionaries</div>
+                    <div class="lesson-link" data-lesson="sets">Sets</div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Introduction -->
+            <div id="intro" class="lesson-content">
+                <h2>Introduction to Python</h2>
+                <div class="concept-card">
+                    <h3>Welcome to Python!</h3>
+                    <p>Python is a versatile programming language widely used in AI and Machine Learning.</p>
+                </div>
+                <div class="code-editor" id="editor-intro">
+# Your first Python program
+print("Hello, AI World!")
+                </div>
+                <button class="run-btn">Run Code</button>
+                <div class="output-area"></div>
+            </div>
+
+            <!-- Variables -->
+            <div id="variables" class="lesson-content">
+                <h2>Variables & Data Types</h2>
+                <div class="concept-card">
+                    <h3>Understanding Variables</h3>
+                    <p>Variables are containers for storing data values in Python.</p>
+                </div>
+                <div class="code-editor" id="editor-variables">
+# Basic variable types
+number = 42
+decimal = 3.14
+text = "Python for AI"
+is_active = True
+
+print(f"Number: {number}")
+print(f"Decimal: {decimal}")
+print(f"Text: {text}")
+print(f"Boolean: {is_active}")
+                </div>
+                <button class="run-btn">Run Code</button>
+                <div class="output-area"></div>
+            </div>
+
+            <!-- Control Structures -->
+            <div id="control" class="lesson-content">
+                <h2>Control Structures</h2>
+                <div class="concept-card">
+                    <h3>Decision Making in Python</h3>
+                    <p>Control structures help you make decisions and control the flow of your program.</p>
+                </div>
+                <div class="code-editor" id="editor-control">
+# Example of if-else statement
+score = 85
+
+if score >= 90:
+    print("Excellent!")
+elif score >= 80:
+    print("Good job!")
+else:
+    print("Keep practicing!")
+                </div>
+                <button class="run-btn">Run Code</button>
+                <div class="output-area"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize Ace editors
+        document.querySelectorAll('.code-editor').forEach(editorElement => {
+            const editor = ace.edit(editorElement);
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/python");
+            editor.setFontSize(14);
+        });
+
+        // Module expansion
+        document.querySelectorAll('.module-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const module = header.parentElement;
+                const icon = header.querySelector('i');
+                
+                module.classList.toggle('active');
+                
+                if (module.classList.contains('active')) {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
+                } else {
+                    icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+                }
+            });
+        });
+
+        // Lesson navigation
+        document.querySelectorAll('.lesson-link').forEach(link => {
+            link.addEventListener('click', () => {
+                // Remove active class from all lessons
+                document.querySelectorAll('.lesson-link').forEach(l => 
+                    l.classList.remove('active'));
+                document.querySelectorAll('.lesson-content').forEach(content => 
+                    content.classList.remove('active'));
+                
+                // Add active class to clicked lesson
+                link.classList.add('active');
+                
+                // Show corresponding content
+                const lessonId = link.getAttribute('data-lesson');
+                document.getElementById(lessonId).classList.add('active');
+            });
+        });
+
+        // Run button functionality
+        document.querySelectorAll('.run-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const outputArea = btn.nextElementSibling;
+                outputArea.textContent = 'Running code...';
+                setTimeout(() => {
+                    outputArea.textContent = 'Code execution completed!';
+                }, 1000);
+            });
+        });
+
+        // Mobile sidebar toggle
+        const toggleBtn = document.querySelector('.toggle-sidebar');
+        const sidebar = document.querySelector('.sidebar');
+        
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Show first lesson by default
+        document.querySelector('.lesson-link').classList.add('active');
+        document.querySelector('.lesson-content').classList.add('active');
+    </script>
+</body>
+</html>

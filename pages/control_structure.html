@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Structures in Python - AI Programming</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, #4158D0, #C850C0);
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .lesson-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-editor {
+            height: 200px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #eee;
+        }
+
+        .run-btn {
+            background: #4158D0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .run-btn:hover {
+            background: #3648b8;
+        }
+
+        .output-area {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            min-height: 100px;
+        }
+
+        .exercise-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid #4158D0;
+            color: #4158D0;
+        }
+
+        .visualization {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-diagram {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .concept-card {
+            background: #f8f9fa;
+            border-left: 4px solid #4158D0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .challenge-section {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4158D0;
+            width: 0%;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-header">
+        <div class="container">
+            <h1>Control Structures in Python</h1>
+            <p>Learn how to control program flow for AI applications</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="lesson-section">
+            <div class="tab-container">
+                <div class="tab active">Conditional Statements</div>
+                <div class="tab">Loops</div>
+                <div class="tab">Pattern Recognition</div>
+            </div>
+
+            <h2>1. Conditional Statements</h2>
+            <div class="concept-card">
+                <h3>Key Concept</h3>
+                <p>Conditional statements are fundamental in AI for decision making and pattern recognition. They allow your program to make choices based on data.</p>
+            </div>
+
+            <div class="visualization">
+                <svg class="flow-diagram" viewBox="0 0 400 200" width="400">
+                    <path d="M200,20 L200,60" stroke="#4158D0" stroke-width="2"/>
+                    <rect x="150" y="60" width="100" height="40" rx="5" fill="#4158D0"/>
+                    <text x="200" y="85" text-anchor="middle" fill="white">if condition</text>
+                    <path d="M200,100 L150,140" stroke="#4158D0" stroke-width="2"/>
+                    <path d="M200,100 L250,140" stroke="#4158D0" stroke-width="2"/>
+                    <rect x="100" y="140" width="100" height="40" rx="5" fill="#C850C0"/>
+                    <rect x="200" y="140" width="100" height="40" rx="5" fill="#C850C0"/>
+                    <text x="150" y="165" text-anchor="middle" fill="white">True</text>
+                    <text x="250" y="165" text-anchor="middle" fill="white">False</text>
+                </svg>
+            </div>
+
+            <div class="code-editor" id="editor1">
+# Example: AI Decision Making
+confidence_score = 0.85
+threshold = 0.7
+
+if confidence_score > threshold:
+    prediction = "Positive Class"
+    action = "Accept prediction"
+else:
+    prediction = "Uncertain"
+    action = "Request human review"
+
+print(f"Prediction: {prediction}")
+print(f"Action: {action}")
+            </div>
+            <button class="run-btn">Run Code</button>
+            <div class="output-area" id="output1">Output will appear here...</div>
+
+            <div class="exercise-card">
+                <h3>Practice Exercise: Classification Decision</h3>
+                <p>Create a condition to classify images based on confidence scores:</p>
+                <div class="code-editor" id="editor2">
+# Complete the code:
+confidence_score = 0.92
+noise_level = 0.15
+
+# Add conditions to classify the image
+# High confidence (>0.9) and low noise (<0.2): "High Quality"
+# Medium confidence (>0.7) or high noise: "Need Review"
+# Otherwise: "Low Quality"
+
+                </div>
+                <button class="run-btn">Test Solution</button>
+                <div class="output-area" id="output2">Your output will appear here...</div>
+            </div>
+        </div>
+
+        <div class="lesson-section">
+            <h2>2. Loops in AI</h2>
+            <div class="concept-card">
+                <h3>Key Concept</h3>
+                <p>Loops are essential in AI for iterating through data, training models, and implementing algorithms.</p>
+            </div>
+
+            <div class="code-editor" id="editor3">
+# Example: Training Loop
+epochs = 5
+training_accuracy = 0.5
+
+for epoch in range(epochs):
+    # Simulate training improvement
+    training_accuracy += 0.1
+    print(f"Epoch {epoch + 1}: Accuracy = {training_accuracy:.2f}")
+    
+    if training_accuracy >= 0.8:
+        print("Early stopping: Target accuracy reached")
+        break
+            </div>
+            <button class="run-btn">Run Code</button>
+            <div class="output-area" id="output3">Output will appear here...</div>
+        </div>
+
+        <div class="challenge-section">
+            <h3>🏆 Challenge: Pattern Detection</h3>
+            <p>Create a loop to detect patterns in a sequence of numbers using both conditions and loops.</p>
+            <div class="code-editor" id="editor4">
+# Challenge: Pattern Detection
+sequence = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+
+# Write code to:
+# 1. Find the most repeated number
+# 2. Count its occurrences
+# 3. Print: "Number X appears Y times"
+
+            </div>
+            <button class="run-btn">Test Challenge</button>
+            <div class="output-area" id="output4">Challenge output will appear here...</div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Ace editors
+        const editors = ['editor1', 'editor2', 'editor3', 'editor4'].map(id => {
+            const editor = ace.edit(id);
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/python");
+            editor.setFontSize(14);
+            return editor;
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Simulate code running
+        document.querySelectorAll('.run-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const outputArea = document.getElementById(`output${index + 1}`);
+                outputArea.textContent = 'Running code...';
+                setTimeout(() => {
+                    // Simulate output based on the editor
+                    if (index === 0) {
+                        outputArea.textContent = 'Prediction: Positive Class\nAction: Accept prediction';
+                    } else {
+                        outputArea.textContent = 'Code execution completed! Check your logic...';
+                    }
+                }, 1000);
+            });
+        });
+
+        // Animate progress bar
+        setTimeout(() => {
+            document.querySelector('.progress-fill').style.width = '30%';
+        }, 500);
+    </script>
+</body>
+</html>
